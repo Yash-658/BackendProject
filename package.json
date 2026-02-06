@@ -1,0 +1,25 @@
+{
+  "name": "backendproject",
+  "version": "1.0.0",
+  "description": "A backend project",
+  "keywords": [
+    "javascript",
+    "backend",
+    "tehalka"
+  ],
+  "homepage": "https://github.com/Yash-658/BackendProject#readme",
+  "bugs": {
+    "url": "https://github.com/Yash-658/BackendProject/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Yash-658/BackendProject.git"
+  },
+  "license": "ISC",
+  "author": "Yash Raghuwanshi",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
