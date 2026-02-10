@@ -1,3 +1,5 @@
+// This is just a wrapper function so that we don't have to write async/await and error handling again and again~
+
 const asyncHandler = (requestHandler) => {
     return (req, res, next) => {
         Promise.resolve(requestHandler(req, res, next)).
