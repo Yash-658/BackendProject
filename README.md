@@ -7,3 +7,5 @@ WHILE CONNECTING AND USING DB~
 -> DB is always in another continent (use async/await)
 
 -> We mostly use .use while using middlewares or any config settings
+
+-> JWT is a bearer token~
