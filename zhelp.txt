@@ -1,0 +1,57 @@
+FastAPI     - web framework that handles HTTP requests and serves your data to users.
+   ↓
+SQLAlchemy  - Python database toolkit / Object-Relational Mapper (ORM) that lets you write Python code instead of raw SQL queries.
+   ↓
+psycopg     - this driver handles postgresql specific communication
+   ↓
+PostgreSQL  - RDBMS for persistent storage
+
+⭐ Pydantic : the data validation and serialization library that defines how data looks, 
+ensuring incoming API requests and outgoing responses match your exact structure and rules.
+
+⭐ Alembic is SQLAlchemy's database migration tool.
+⭐ pwdlib provides a clean password-hashing interface, while Argon2 is the hashing algorithm we'll use.
+⭐ PyJWT for handling JWT encoding and decoding 
+⭐ HS256 for signing secret key for our JWT
+⭐ Using OAuth2PasswordBearer for fetching JWT token from the authentication header of the request body~
+⭐ Using RBAC (Role Based Access Control), ex: admins users can modify problems, while normal users can access and submit solutions on them, and anyone can see them~ 
+⭐ Using redisRQ (redis queue) for seperating submission API and code judging logic
+
+IMP POINTS -
+>> We do not decrypt the hash. Password hashes are designed to be one-way.
+>> ID generation is handled by PostgreSQL itself
+>> JWT = Header.Payload.Signature; payload is readable, while the SECRET_KEY creates a signature tied to the exact header+payload, 
+preventing tampering(can't impersonate other users by modifying JWT) but not impersonation if the valid token is stolen.
+>> JWTs are bearer tokens: possession of a valid, unexpired token grants access as that user.
+>> WE ARE STRIPPING WHITESPACES BEFORE COMPARING OUTPUT, so take this in consideration when adding testcases where leading or trailing whitespaces are necessary
+>> One distinction: In total_execution_time, its total elapsed time across five Docker runs, including container startup and shutdown.
+   It isn't just the Python code's execution time.
+>> When Python executes import app.models, it automatically executes app/models/__init__.py.
+>> two retries for temporary judging failures in RQ, followed by a clear final failure state.
+>> Implemented custom failed job management tool in workers.failed_jobs
+   use "python -m app.workers.failed_jobs list" to list failed jobs 
+   use "python -m app.workers.failed_jobs requeue abc123" to requeue a failed job with its job id
+
+TO DO:
+-> case sensitive uniqueness checking for problemDB.title
+
+
+                    CODING PLATFORM
+                           │
+          ┌────────────────┼────────────────┐
+          │                │                │
+        PUBLIC        AUTHENTICATED        ADMIN
+          │                │                │
+     Read problems    Submit solutions   Manage problems
+     Browse problems  View own history   Manage users
+                      User profile       etc.
+
+
+>> models/	   Database models
+>> schemas/	   Request and response validation
+>> routers/	   API endpoints
+>> services/	Business logic, such as judging submissions
+>> utils/	   Reusable helper functions
+>> queue.py	   Redis connection and queue configuration
+
+CHECK PYTHON BACKEND PROJECT HANDOFF NOTES BEFORE CONTINUING THIS PROJECT~
